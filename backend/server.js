@@ -6,6 +6,12 @@ const app = express();
 
 app.get('/test', (req, res) => {
 	res.json({ok: true});
+	console.log("reached test endpoint")
+});
+
+app.get('/', (req, res) => {
+	res.json({ok: true});
+	console.log("reached root endpoint")
 });
 
 
