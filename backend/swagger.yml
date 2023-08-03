@@ -4,7 +4,9 @@ info:
   description: API Docs for AWS-Test server
   version: 0.0.1
 servers:
-  - url: https://3.17.164.221:5000
+  - url: https://18.222.161.136:5000
+  - url: https:localhost:5000
+  - url: /
 paths:
   /test:
     get:
