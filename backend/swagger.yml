@@ -13,9 +13,10 @@ paths:
     get:
       summary: Returns a JSON containing a message.
       responses:
-        '200':    # status code
-          description: A string message indicating successful response
-          content:
-            application/json:
-              schema: 
+        200:
+          description: "Success"
+          schema:
+            type: object
+            properties:
+              message:
                 type: string
