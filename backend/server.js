@@ -3,6 +3,8 @@ const https = require('https')
 const fs = require('fs')
 const app = express();
 const cors = require('cors')
+const swaggerUI = require('swagger-ui-express')
+const swaggerDoc = YAML.load('swagger.yml')
 
 const PORT = 5000;
 
@@ -12,6 +14,8 @@ const options = {
 }
 
 app.use(cors())
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
 app.get('/test', (req, res) => {
 	res.json({message: "Node server works!"});
