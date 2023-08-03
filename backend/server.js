@@ -14,7 +14,9 @@ const options = {
 	cert: fs.readFileSync('certificate.pem')
 }
 
-app.use(cors())
+app.use(cors({
+  origin: '*',
+}));
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 
