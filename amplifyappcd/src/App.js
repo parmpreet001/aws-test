@@ -7,7 +7,7 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://3.17.164.221:5000/test');
+      const response = await fetch('https://3.17.164.221:5000/test');
       const jsonData = await response.json();
       setData(jsonData);
       console.log(`Successfuly retrieved data from node endpoint`)
