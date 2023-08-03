@@ -1,11 +1,14 @@
 const express = require('express')
+const app = express();
+const cors = require('cors')
 
 const PORT = 5000;
 
-const app = express();
+app.use(cors())
+
 
 app.get('/test', (req, res) => {
-	res.json({ok: true});
+	res.json({message: "Node server works!"});
 	console.log("reached test endpoint")
 });
 
