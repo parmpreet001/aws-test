@@ -22,10 +22,7 @@ app.get('/', (req, res) => {
 });
 
 
-const server = https.createServer(options, (req, res) => {
-	res.writeHead(200);
-	res.end('Started HTTPS server');
-});
+const server = https.createServer(options, app);
 
 server.listen(PORT, '0.0.0.0', () => {
 	console.log(`HTTP Server running on port ${PORT}`);
