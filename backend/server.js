@@ -11,6 +11,8 @@ const options = {
 	cert: fs.readFileSync('certificate.pem')
 }
 
+app.use(cors())
+
 app.get('/test', (req, res) => {
 	res.json({message: "Node server works!"});
 	console.log("reached test endpoint")
