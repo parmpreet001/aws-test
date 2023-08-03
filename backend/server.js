@@ -3,6 +3,7 @@ const https = require('https')
 const fs = require('fs')
 const app = express();
 const cors = require('cors')
+const YAML = require('yamljs')
 const swaggerUI = require('swagger-ui-express')
 const swaggerDoc = YAML.load('swagger.yml')
 
