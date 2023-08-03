@@ -4,10 +4,7 @@ info:
   description: API Docs for AWS-Test server
   version: 0.0.1
 servers:
-  - url: https://api.example.com/v1
-    description: Optional server description, e.g. Main (production) server
-  - url: https://staging-api.example.com
-    description: Optional server description, e.g. Internal staging server for testing
+  - url: https://3.17.164.221:5000
 paths:
   /test:
     get:
