@@ -15,7 +15,22 @@ paths:
         200:
           description: "Success"
           schema:
-            type: object
-            properties:
-              message:
-                type: string
+            type: string
+  /register:
+    post:
+      summary: Adds a new user into the database
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: "Success"
+        500:
+          description: "Bad Request"
