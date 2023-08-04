@@ -48,17 +48,36 @@ app.post("/register", (req, res) => {
 	  	return sqlFunctions.insertNewUser(db, username, hash)
 		})
 		.then(() => {
-			console.log("returning with code 200");
-			res.status(200).send();
+			res.status(200).send("Successfully registered new user");
 		})
 		.catch(() => {
-			console.log("returning with code 500");
-			res.status(500).send();
+			console.log("Incorrect username or password");
+			res.status(400).send();
 		})
 })
 
 app.post("/login", (req, res) => {
-	res.json("login");
+	console.log("Calling /login");
+	const {username, password} = req.body;
+
+	sqlFunctions.userExists(db, username)
+		.then(() => {
+			return sqlFunctions.getHashedPassword(db, username);
+		})
+		.then((hashedPassword) => {
+			return bcrypt.compare(password, hashedPassword)
+		})
+		.then((match) => {
+			if (match) {
+				res.status(200).send("Credentials Valid")
+			}	
+			else {
+				res.status(400).send("Invalid Credentials");
+			}
+		})
+		.catch(() => {
+			res.status(400).send("Invalid Credentials");
+		})
 })
 
 
