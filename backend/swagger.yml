@@ -32,5 +32,23 @@ paths:
       responses:
         200:
           description: "Success"
-        500:
+        400:
+          description: "Bad Request"
+  /login:
+    post:
+      summary: Login with user credentials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: "Success"
+        400:
           description: "Bad Request"
