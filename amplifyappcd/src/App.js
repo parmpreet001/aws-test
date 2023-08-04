@@ -3,11 +3,12 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 
 function App() {
+  const proxy = 'https:localhost:5000'
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
     try {
-      const response = await fetch('https://3.17.164.221:5000/test');
+      const response = await fetch(proxy + '/test');
       const jsonData = await response.json();
       setData(jsonData);
       console.log(`Successfuly retrieved data from node endpoint`)
@@ -28,16 +29,8 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
         <div>
-          {data === null ? <p>Loading...</p> : <p>{data.message}</p>}
+          {data === null ? <p>Loading...</p> : <p>{data}</p>}
         </div>
 
       </header>
