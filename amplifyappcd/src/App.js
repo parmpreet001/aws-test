@@ -5,7 +5,7 @@ import LoginForm from './Components/LoginForm'
 import axios from 'axios';
 
 function App() {
-  const proxy = 'https:localhost:5000'
+  const proxy = 'https://3.12.73.226/5000'
   const [data, setData] = useState([]);
 
   const fetchData = () => {
