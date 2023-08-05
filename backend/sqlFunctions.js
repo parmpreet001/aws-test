@@ -1,8 +1,11 @@
 const sqlite3 = require('sqlite3').verbose();
 
-function printErrorAndReject(error, reject) {
+function printErrorAndReject(error, reject, rejectMessage) {
 	console.log(error);
-	reject();
+	if (rejectMessage === null)
+		reject();
+	else
+		reject(rejectMessage)
 }
 
 function printMessageAndResolve(message, resolve) {
@@ -21,7 +24,7 @@ function insertNewUser(db, username, password) {
 			});
 		}
 		catch(error) {
-			printErrorAndReject(`SQL: ${error}`, reject)
+			printErrorAndReject(`SQL: ${error}`, reject, error)
 		}
 	})
 }
@@ -32,15 +35,15 @@ function userExists(db, username) {
 			db.get('SELECT * FROM Users WHERE username = ?', [`${username}`], (err, row) => {
 				console.log(row);
 				if (err)
-					printErrorAndReject(`SQL: Could not find user ${username} in database. ${err.message}`, reject)
+					printErrorAndReject(`SQL: Could not find user ${username} in database. ${err.message}`, reject, "Invalid Username")
 				else if (row == null)
-					printErrorAndReject(`SQL: Could not find user ${username} in database`, reject)
+					printErrorAndReject(`SQL: Could not find user ${username} in database`, reject, "Invalid Username")
 				else
 					printMessageAndResolve(`SQL: Found use ${username} in database`, resolve)
 			})
 		}
 		catch(error) {
-			printErrorAndReject(`SQL: ${error}`, reject)
+			printErrorAndReject(`SQL: ${error}`, reject, error)
 		}
 	})
 }
@@ -57,7 +60,7 @@ function getHashedPassword(db, username) {
 			})
 		}
 		catch(error) {
-			printErrorAndReject(`SQL: ${error}`, reject)
+			printErrorAndReject(`SQL: ${error}`, reject, error)
 		}
 	})
 } 
