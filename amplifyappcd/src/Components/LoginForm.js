@@ -6,7 +6,7 @@ function LoginForm() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
-	const proxy = 'https://3.12.73.226:5000'
+	const proxy = 'http://localhost:5000'
 
 	const onUsernameChange = (event) => {
 		setUsername(event.target.value);
@@ -21,7 +21,7 @@ function LoginForm() {
 		console.log(username, password);
 		
 		const onLoginAxios = () => {
-			axios.post(proxy + '/profile', {username: username, password: password})
+			axios.post(proxy + '/login', {username: username, password: password})
 			.then((response) => {
 				console.log(response.data)
 			}).catch((err) => {
