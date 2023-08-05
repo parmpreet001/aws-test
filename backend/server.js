@@ -8,7 +8,11 @@ const swaggerUI = require('swagger-ui-express')
 const swaggerDoc = YAML.load('swagger.yml')
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcrypt')
+const cookieParser = require("cookie-parser")
+const JWT = require('./JWT')
+
 const bodyParser = require('body-parser');
+
 
 const sqlFunctions = require('./sqlFunctions.js')
 
@@ -23,11 +27,21 @@ const options = {
 
 app.use(cors({
   origin: '*',
+	allowedHeaders: ['Content-Type']
 }));
 
 app.use(bodyParser.json());
 
+app.use(cookieParser());
+
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
+
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
 
 app.get('/test', (req, res) => {
 	res.json("Node server works!");
@@ -69,7 +83,9 @@ app.post("/login", (req, res) => {
 		})
 		.then((match) => {
 			if (match) {
-				res.status(200).send("Credentials Valid")
+				const accessToken = JWT.creatToken({username: username});
+
+				res.status(200).json({accessToken: accessToken})
 			}	
 			else {
 				res.status(400).send("Invalid Credentials");
@@ -80,7 +96,10 @@ app.post("/login", (req, res) => {
 		})
 })
 
-
+app.post("/profile", (req, res) => {
+	console.log("Reached profile endpoint");
+	res.json({ message: "profile" });
+})
 
 
 const server = https.createServer(options, app);
