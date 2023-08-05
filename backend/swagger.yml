@@ -52,3 +52,19 @@ paths:
           description: "Success"
         400:
           description: "Bad Request"
+  /profile:
+    get:
+      summary: Test token bullshit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+      responses:
+        200:
+          description: "Success"
+        400:
+          description: "Bad Request"
