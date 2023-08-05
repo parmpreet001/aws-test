@@ -6,7 +6,7 @@ function LoginForm() {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
-	const proxy = 'https://3.12.73.226/5000'
+	const proxy = 'https://3.12.73.226:5000'
 
 	const onUsernameChange = (event) => {
 		setUsername(event.target.value);
