@@ -1,12 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import LoginForm from './Components/LoginForm'
+import LoginRegistrationForm from './Components/LoginForm'
 import axios from 'axios';
 
 function App() {
   const proxy = 'http://localhost:5000'
   const [data, setData] = useState([]);
+  const [accessToken, setAccessToken] = useState(null);
 
   const fetchData = () => {
     axios.get(proxy + '/test')
@@ -33,7 +34,7 @@ function App() {
           {data === null ? <p>Loading...</p> : <p>{data}</p>}
         </div>
         <div>
-          <LoginForm/>
+          <LoginRegistrationForm accessToken={accessToken} setAccessToken={setAccessToken}/>
         </div>
 
       </header>
