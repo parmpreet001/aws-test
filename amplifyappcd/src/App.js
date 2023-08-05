@@ -1,19 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import LoginRegistrationForm from './Components/LoginForm'
+import axios from 'axios';
 
 function App() {
+  const proxy = 'http://localhost:5000'
   const [data, setData] = useState([]);
+  const [accessToken, setAccessToken] = useState(null);
 
-  const fetchData = async () => {
-    try {
-      const response = await fetch('https://3.17.164.221:5000/test');
-      const jsonData = await response.json();
-      setData(jsonData);
-      console.log(`Successfuly retrieved data from node endpoint`)
-    } catch(error) {
-      console.error("Error fetching data:", error);
-    }
+  const fetchData = () => {
+    axios.get(proxy + '/test')
+    .then((response) => {
+      setData(response.data)
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
   useEffect(() => {
@@ -28,16 +30,11 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
         <div>
-          {data === null ? <p>Loading...</p> : <p>{data.message}</p>}
+          {data === null ? <p>Loading...</p> : <p>{data}</p>}
+        </div>
+        <div>
+          <LoginRegistrationForm accessToken={accessToken} setAccessToken={setAccessToken}/>
         </div>
 
       </header>

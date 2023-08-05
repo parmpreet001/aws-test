@@ -8,7 +8,11 @@ const swaggerUI = require('swagger-ui-express')
 const swaggerDoc = YAML.load('swagger.yml')
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcrypt')
+const cookieParser = require("cookie-parser")
+const JWT = require('./JWT')
+
 const bodyParser = require('body-parser');
+
 
 const sqlFunctions = require('./sqlFunctions.js')
 
@@ -23,11 +27,21 @@ const options = {
 
 app.use(cors({
   origin: '*',
+	allowedHeaders: ['Content-Type']
 }));
 
 app.use(bodyParser.json());
 
+app.use(cookieParser());
+
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
+
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  next();
+});
 
 app.get('/test', (req, res) => {
 	res.json("Node server works!");
@@ -48,27 +62,53 @@ app.post("/register", (req, res) => {
 	  	return sqlFunctions.insertNewUser(db, username, hash)
 		})
 		.then(() => {
-			console.log("returning with code 200");
-			res.status(200).send();
+			res.status(200).send("Successfully registered new user");
 		})
 		.catch(() => {
-			console.log("returning with code 500");
-			res.status(500).send();
+			console.log("Incorrect username or password");
+			res.status(400).send();
 		})
 })
 
 app.post("/login", (req, res) => {
-	res.json("login");
+	const {username, password} = req.body;
+
+	sqlFunctions.userExists(db, username)
+		.then(() => {
+			return sqlFunctions.getHashedPassword(db, username);
+		})
+		.then((hashedPassword) => {
+			return bcrypt.compare(password, hashedPassword)
+		})
+		.then((match) => {
+			if (match) {
+				const accessToken = JWT.createToken({username: username});
+				console.log(accessToken);
+				res.status(200).json({accessToken: accessToken})
+			}	
+			else {
+				res.status(400).json("Invalid Password");
+			}
+		})
+		.catch((err) => {
+			res.status(400).json(err);
+		})
 })
 
+app.post("/profile", (req, res) => {
+	console.log("Reached profile endpoint");
+	res.json({ message: "profile" });
+})
 
+app.listen(PORT, '0.0.0.0', () => console.log(`HTTP Server is now running on port ${PORT}`))
 
+// const server = https.createServer(options, app);
 
-const server = https.createServer(options, app);
-
+/*
 server.listen(PORT, '0.0.0.0', () => {
 	console.log(`HTTP Server running on port ${PORT}`);
 });
+*/
 
 /*
 
