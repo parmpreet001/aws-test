@@ -1,6 +1,6 @@
 const { sign, verify } = require("jsonwebtoken");
 
-const creatToken = (user) => {
+const createToken = (user) => {
 	const accessToken = sign({username: user.username}, "blah")
 	return accessToken;
 }
@@ -23,4 +23,4 @@ const validateToken = (req, res, next) => {
 		}
 }
 
-module.exports = { creatToken, validateToken }
+module.exports = { createToken, validateToken }
