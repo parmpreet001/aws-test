@@ -71,7 +71,6 @@ app.post("/register", (req, res) => {
 })
 
 app.post("/login", (req, res) => {
-	console.log("Calling /login");
 	const {username, password} = req.body;
 
 	sqlFunctions.userExists(db, username)
@@ -83,16 +82,16 @@ app.post("/login", (req, res) => {
 		})
 		.then((match) => {
 			if (match) {
-				const accessToken = JWT.creatToken({username: username});
-
+				const accessToken = JWT.createToken({username: username});
+				console.log(accessToken);
 				res.status(200).json({accessToken: accessToken})
 			}	
 			else {
-				res.status(400).send("Invalid Credentials");
+				res.status(400).json("Invalid Password");
 			}
 		})
-		.catch(() => {
-			res.status(400).send("Invalid Credentials");
+		.catch((err) => {
+			res.status(400).json(err);
 		})
 })
 
@@ -101,12 +100,15 @@ app.post("/profile", (req, res) => {
 	res.json({ message: "profile" });
 })
 
+app.listen(PORT, '0.0.0.0', () => console.log(`HTTP Server is now running on port ${PORT}`))
 
-const server = https.createServer(options, app);
+// const server = https.createServer(options, app);
 
+/*
 server.listen(PORT, '0.0.0.0', () => {
 	console.log(`HTTP Server running on port ${PORT}`);
 });
+*/
 
 /*
 
