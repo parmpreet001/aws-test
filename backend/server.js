@@ -100,15 +100,16 @@ app.post("/profile", (req, res) => {
 	res.json({ message: "profile" });
 })
 
-app.listen(PORT, '0.0.0.0', () => console.log(`HTTP Server is now running on port ${PORT}`))
+if (process.env.NODE_ENV === 'development')
+	app.listen(PORT, '0.0.0.0', () => console.log(`HTTP Server is now running on port ${PORT}`))
+else {
+	const server = https.createServer(options, app);
 
-// const server = https.createServer(options, app);
+	server.listen(PORT, '0.0.0.0', () => {
+		console.log(`HTTP Server running on port ${PORT}`);
+	});
+}
 
-/*
-server.listen(PORT, '0.0.0.0', () => {
-	console.log(`HTTP Server running on port ${PORT}`);
-});
-*/
 
 /*
 
