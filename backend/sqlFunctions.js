@@ -6,9 +6,12 @@ function printErrorAndReject(error, reject, rejectMessage) {
 		reject(rejectMessage)
 }
 
-function printMessageAndResolve(message, resolve) {
+function printMessageAndResolve(message, resolve, resolveObject) {
 	console.log(message);
-	resolve();
+	if (resolveObject === null)
+		resolve();
+	else
+		resolve(resolveObject)
 }
 
 function insertNewUser(db, username, password) {
@@ -65,13 +68,34 @@ function getHashedPassword(db, username) {
 
 function addChannel(db, username, channelName) {
 	return new Promise((resolve, reject) => {
-		db.run('INSERT INTO Channels (owner, name) VALUES (?,?)', [username, channelName], (err) => {
-			if (err)
-				printErrorAndReject(`SQL: Could not create channel ${channelName}. ${err.message}`, reject)
-			else
-				printMessageAndResolve(`Added channel ${channelName} to channels created by ${username}`, resolve);
-		})
+		try {
+			db.run('INSERT INTO Channels (owner, name) VALUES (?,?)', [username, channelName], (err) => {
+				if (err)
+					printErrorAndReject(`SQL: Could not create channel ${channelName}. ${err.message}`, reject)
+				else
+					printMessageAndResolve(`SQL: Added channel ${channelName} to channels created by ${username}`, resolve);
+			})			
+		}
+		catch(error) {
+			printErrorAndReject(`SQL: ${error}`, reject, error)
+		}
 	})
 }
 
-module.exports = {insertNewUser, userExists, getHashedPassword, addChannel}
+function getAllChannels(db) {
+	return new Promise((resolve, reject) => {
+		try {
+			db.all('SELECT * FROM Channels', (err, rows) => {
+				if (err)
+					printErrorAndReject('SQL: Could not retrieve channels', reject)
+				else
+					printMessageAndResolve('SQL: Retrieved channels', resolve, rows)
+			})			
+		}
+		catch(error) {
+			printErrorAndReject(`SQL: ${error}`, reject, error)
+		}
+	})
+}
+
+module.exports = {insertNewUser, userExists, getHashedPassword, addChannel, getAllChannels}
