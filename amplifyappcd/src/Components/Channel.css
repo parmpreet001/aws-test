@@ -1,0 +1,29 @@
+.channel-card-container {
+	width: 75vw;
+	margin: 20px;
+	background-color: #1f2329;
+	border: 1px solid #c4c4c4;
+	border-radius: 8px;
+
+	filter: drop-shadow(5px 10px 4px #1d2126);
+	
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	text-align: left;
+	padding: 0.2rem 1rem;
+}
+
+.channel-card-name {
+	font-size: 1.25em;
+}
+
+.channel-card-owner {
+	font-size: 0.75em;
+	color: gray;
+}
+
+.channel-card-messages {
+	font-size: 20px;
+
+}
