@@ -1,5 +1,3 @@
-const sqlite3 = require('sqlite3').verbose();
-
 function printErrorAndReject(error, reject, rejectMessage) {
 	console.log(error);
 	if (rejectMessage === null)
@@ -63,6 +61,17 @@ function getHashedPassword(db, username) {
 			printErrorAndReject(`SQL: ${error}`, reject, error)
 		}
 	})
-} 
+}
 
-module.exports = {insertNewUser, userExists, getHashedPassword}
+function addChannel(db, username, channelName) {
+	return new Promise((resolve, reject) => {
+		db.run('INSERT INTO Channels (owner, name) VALUES (?,?)', [username, channelName], (err) => {
+			if (err)
+				printErrorAndReject(`SQL: Could not create channel ${channelName}. ${err.message}`, reject)
+			else
+				printMessageAndResolve(`Added channel ${channelName} to channels created by ${username}`, resolve);
+		})
+	})
+}
+
+module.exports = {insertNewUser, userExists, getHashedPassword, addChannel}
