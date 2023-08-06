@@ -10,6 +10,7 @@ const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcrypt')
 const cookieParser = require("cookie-parser")
 const JWT = require('./JWT')
+require('dotenv').config();
 
 const bodyParser = require('body-parser');
 
@@ -95,18 +96,22 @@ app.post("/login", (req, res) => {
 		})
 })
 
-app.post("/profile", (req, res) => {
+app.post("/profile", JWT.validateToken, (req, res) => {
 	console.log("Reached profile endpoint");
-	res.json({ message: "profile" });
+	if (req.authenticated)
+		return;
+	else
+		res.status(400).json("Error")
 })
 
-if (process.env.NODE_ENV === 'development')
+
+if (process.env.SERVER_TYPE === 'development')
 	app.listen(PORT, '0.0.0.0', () => console.log(`HTTP Server is now running on port ${PORT}`))
 else {
 	const server = https.createServer(options, app);
 
 	server.listen(PORT, '0.0.0.0', () => {
-		console.log(`HTTP Server running on port ${PORT}`);
+		console.log(`HTTPS Server running on port ${PORT}`);
 	});
 }
 
