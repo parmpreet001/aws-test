@@ -53,7 +53,7 @@ paths:
         400:
           description: "Bad Request"
   /profile:
-    get:
+    post:
       summary: Test token bullshit
       requestBody:
         content:
@@ -61,7 +61,7 @@ paths:
             schema:
               type: object
               properties:
-                username:
+                accessToken:
                   type: string
       responses:
         200:
