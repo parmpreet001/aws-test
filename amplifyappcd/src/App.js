@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import LoginRegistrationForm from './Components/LoginForm'
+import Channels from './Components/Channels'
 import axios from 'axios';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
 
   const [data, setData] = useState([]);
   const [accessToken, setAccessToken] = useState(null);
+  const [username, setUsername] = useState('')
 
   const fetchData = () => {
     axios.get(proxy + '/test')
@@ -31,14 +33,13 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
         <div>
           {data === null ? <p>Loading...</p> : <p>{data}</p>}
         </div>
         <div>
-          <LoginRegistrationForm accessToken={accessToken} setAccessToken={setAccessToken}/>
+          {accessToken === null ? 
+            <LoginRegistrationForm accessToken={accessToken} setAccessToken={setAccessToken} setAppUsername={setUsername}/> :
+            <Channels accessToken={accessToken} proxy={proxy}/>}
         </div>
 
       </header>
