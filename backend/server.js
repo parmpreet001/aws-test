@@ -104,6 +104,19 @@ app.post("/profile", JWT.validateToken, (req, res) => {
 		res.status(400).json("Error")
 })
 
+app.post("/addChannel", JWT.validateToken, (req, res) => {
+	const { username, channelName } = req.body;
+
+	sqlFunctions.addChannel(db, username, channelName)
+		.then(() => {
+			res.status(200).json("Added Channel");
+		})
+		.catch((err) => {
+			res.status(400).json(err);
+		})
+	// console.log(`Called /addChannel with: ${username} and ${channelName}`)
+})
+
 
 if (process.env.SERVER_TYPE === 'development')
 	app.listen(PORT, '0.0.0.0', () => console.log(`HTTP Server is now running on port ${PORT}`))
