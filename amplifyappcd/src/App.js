@@ -5,7 +5,13 @@ import LoginRegistrationForm from './Components/LoginForm'
 import axios from 'axios';
 
 function App() {
-  const proxy = 'http://localhost:5000'
+  let proxy;
+
+  if (process.env.NODE_ENV === 'development')
+    proxy = 'http://localhost:5000';
+  else
+    proxy = 'https://172.31.13.91:5000'
+
   const [data, setData] = useState([]);
   const [accessToken, setAccessToken] = useState(null);
 
