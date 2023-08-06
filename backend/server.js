@@ -99,7 +99,7 @@ app.post("/login", (req, res) => {
 app.post("/profile", JWT.validateToken, (req, res) => {
 	console.log("Reached profile endpoint");
 	if (req.authenticated)
-		return;
+		res.status(200).json("Token Validated!")
 	else
 		res.status(400).json("Error")
 })
