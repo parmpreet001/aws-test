@@ -120,6 +120,7 @@ app.post("/addChannel", JWT.validateToken, (req, res) => {
 app.post("/getChannels", JWT.validateToken, (req, res) => {
 	sqlFunctions.getAllChannels(db)
 		.then((rows) => {
+			console.log(rows);
 			res.status(200).json(rows)
 		})
 		.catch((err) => {

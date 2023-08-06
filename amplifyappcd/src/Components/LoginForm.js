@@ -55,10 +55,6 @@ function LoginRegistrationForm({accessToken, setAccessToken, setAppUsername}) {
 		
 		<div>
 			<div>
-				{TestSubComponent()}
-			</div>
-			
-			<div>
 				<label htmlFor='username'>Username:</label>
 				<input
 					type='text'
