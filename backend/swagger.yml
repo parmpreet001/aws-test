@@ -88,3 +88,20 @@ paths:
           description: "Success"
         400:
           descripton: "Bad Request"
+  /getChannels:
+    post:
+      summary: Get All Channels
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+      responses:
+        200:
+          description: "Retrieved Channels"
+        400:
+          description: "Bad Request"
+          
