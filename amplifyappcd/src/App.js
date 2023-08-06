@@ -12,6 +12,7 @@ function App() {
 
   const [data, setData] = useState([]);
   const [accessToken, setAccessToken] = useState(null);
+  const [username, setUsername] = useState('')
 
   const fetchData = () => {
     axios.get(proxy + '/test')
@@ -38,7 +39,7 @@ function App() {
           {data === null ? <p>Loading...</p> : <p>{data}</p>}
         </div>
         <div>
-          <LoginRegistrationForm accessToken={accessToken} setAccessToken={setAccessToken}/>
+          <LoginRegistrationForm accessToken={accessToken} setAccessToken={setAccessToken} setAppUsername={setUsername}/>
         </div>
 
       </header>
