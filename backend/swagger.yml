@@ -68,3 +68,23 @@ paths:
           description: "Success"
         400:
           description: "Bad Request"
+  /addChannel:
+    post:
+      summary: Add channel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                username:
+                  type: string
+                channelName:
+                  type: string
+      responses:
+        200:
+          description: "Success"
+        400:
+          descripton: "Bad Request"
