@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const channelSchema = new Schema({
-	channelName: {
+	name: {
 		type: String,
 		required: true
 	},
