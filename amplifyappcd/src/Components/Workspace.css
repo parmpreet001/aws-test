@@ -1,11 +1,11 @@
-.channel-card-container {
+.workspace-card-container {
 	width: 75vw;
 	margin: 20px;
 	background-color: #1f2329;
 	border: 1px solid #c4c4c4;
 	border-radius: 8px;
 
-	filter: drop-shadow(5px 10px 4px #1d2126);
+	filter: drop-shadow(5px 5px 4px #1d2126);
 	
 	display: flex;
 	align-items: center;
@@ -14,12 +14,17 @@
 	padding: 0.2rem 1rem;
 }
 
-.channel-card-name {
-	font-size: 1.25em;
+.workspace-card-container:hover {
+	box-shadow: 0 0 15px 5px #555555;
+	background-color: #1d2126;
 }
 
-.channel-card-owner {
-	font-size: 0.75em;
+.workspace-card-name {
+	font-size: 1em;
+}
+
+.workspace-card-owner {
+	font-size: 0.5em;
 	color: gray;
 }
 
