@@ -126,7 +126,7 @@ app.post("/profile", JWT.validateToken, (req, res) => {
 app.post("/addChannel", JWT.validateToken, (req, res) => {
 	const { username, channelName } = req.body;
 
-	const channel = new Channel({channelName: channelName, owner: username})
+	const channel = new Channel({name: channelName, owner: username})
 
 	channel.save()
 		.then(() => {
