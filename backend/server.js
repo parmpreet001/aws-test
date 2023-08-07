@@ -19,7 +19,7 @@ require('dotenv').config();
 //MONGO AND MONGOOSE
 const mongoose = require('mongoose')
 const User = require('./models/user')
-const Channel = require('./models/channel')
+const Workspace = require('./models/workspace')
 
 const uri = "mongodb+srv://master_user:master_user@slack-clone.xt61ykb.mongodb.net/slack-clone-db?retryWrites=true&w=majority";
 const PORT = 5000;
@@ -122,23 +122,23 @@ app.post("/profile", JWT.validateToken, (req, res) => {
 		res.status(400).json("Error")
 })
 
-// CHANNELS
-app.post("/addChannel", JWT.validateToken, (req, res) => {
-	const { username, channelName } = req.body;
+// WORKSPACES
+app.post("/addWorkspace", JWT.validateToken, (req, res) => {
+	const { username, workspaceName } = req.body;
 
-	const channel = new Channel({name: channelName, owner: username})
+	const workspace = new Workspace({name: workspaceName, owner: username})
 
-	channel.save()
+	workspace.save()
 		.then(() => {
-			res.status(200).json("Added Channel");
+			res.status(200).json("Added Workspace");
 		})
 		.catch((err) => {
 			res.status(400).json(err);
 		})
 })
 
-app.post("/getChannels", JWT.validateToken, (req, res) => {
-	Channel.find()
+app.post("/getWorkspaces", JWT.validateToken, (req, res) => {
+	Workspace.find()
 		.then((result) => {
 			res.status(200).json(result);
 		})

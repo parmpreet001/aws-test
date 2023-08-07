@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import LoginRegistrationForm from './Components/LoginForm'
-import Channels from './Components/Channels'
+import Workspaces from './Components/Workspace'
 import axios from 'axios';
 
 function App() {
@@ -39,7 +39,7 @@ function App() {
         <div>
           {accessToken === null ? 
             <LoginRegistrationForm accessToken={accessToken} setAccessToken={setAccessToken} setAppUsername={setUsername}/> :
-            <Channels accessToken={accessToken} proxy={proxy}/>}
+            <Workspaces accessToken={accessToken} proxy={proxy}/>}
         </div>
 
       </header>

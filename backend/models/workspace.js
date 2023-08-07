@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const channelSchema = new Schema({
+const workspaceSchema = new Schema({
 	name: {
 		type: String,
 		required: true
@@ -13,6 +13,6 @@ const channelSchema = new Schema({
 	}
 })
 
-const Channel = mongoose.model('Channel', channelSchema)
+const Workspace = mongoose.model('Workspace', workspaceSchema)
 
-module.exports = Channel;
+module.exports = Workspace;
