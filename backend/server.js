@@ -137,6 +137,35 @@ app.post("/addWorkspace", JWT.validateToken, (req, res) => {
 		})
 })
 
+app.post('/addUserToWorkspace', JWT.validateToken, (req, res) => {
+	const {username, workspaceName, workspaceOwner} = req.body;
+	let m_user;
+	let m_workspace;
+
+	User.findOne({username: username})
+	.then((user) => {
+		m_user = user;
+	})
+	.then(() => {
+		return Workspace.findOne({name: workspaceName, owner: workspaceOwner})
+	})
+	.then((workspace) => {
+		m_workspace = workspace;
+	})
+	.then(() => {
+		m_workspace.users.push(m_user._id);
+		m_workspace.save((err) => {
+			if (err)
+				throw err;
+		})
+		res.status(200).json(`Added ${username} to ${workspaceName}`);
+	})
+	.catch((err) => {
+		console.log(err);
+		res.status(400).json("Username of workspace name invalid");
+	})
+})
+
 app.post("/getWorkspaces", JWT.validateToken, (req, res) => {
 	Workspace.find()
 		.then((result) => {
