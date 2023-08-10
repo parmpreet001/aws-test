@@ -15,7 +15,7 @@ function Workspaces({username, accessToken, proxy}) {
 		setNewWorkspaceName(event.target.value);
 	}
 
-	// GET WORKSPACES
+	// SERVER FUNCTIONS
 	const GetWorkspacesAxios = () => {
 		axios.post(proxy + '/getWorkspaces', {accessToken: accessToken})
 		.then((response) => {
@@ -24,6 +24,7 @@ function Workspaces({username, accessToken, proxy}) {
 			return fetchedWorkspaces;
 		})
 		.then((fetchedWorkspaces) => {
+			//Parse array of workspaces and determie which ones are owned by the user
 			let userWorkspacesTemp = [];
 			fetchedWorkspaces.map((workspaces) => {
 				if (workspaces.owner === username) {
@@ -56,6 +57,7 @@ function Workspaces({username, accessToken, proxy}) {
     GetWorkspacesAxios();
   }, [])
 
+	// TOGGLES
 	const ToggleAddingWorkspace = () => {
 		setAddingWorkspace(!addingWorkspace);
 		setDeletingWorkspace(false);
@@ -68,21 +70,23 @@ function Workspaces({username, accessToken, proxy}) {
 		setWorkspacesToDelete([]);
 	}
 
+	// DATA MANIP. FUNCTIONS
 	const MarkWorkspaceForDeletion = (event) => {
-		const workspaceClicked = event.currentTarget;
-		let workspacesToDeleteTemp = workspacesToDelete;
-		
-		if (userWorkspaces.some(e => e._id === workspaceClicked.id) && !workspacesToDelete.some(e => e._id === workspaceClicked.id))
-			setWorkspacesToDelete([...workspacesToDelete, userWorkspaces.find(item => item._id === workspaceClicked.id)])
-		else if(userWorkspaces.some(e => e._id === workspaceClicked.id) && workspacesToDelete.some(e => e._id === workspaceClicked.id)) {
-			let temp = workspacesToDeleteTemp.filter(e => e._id !== workspaceClicked.id);
-			setWorkspacesToDelete(temp);
+		const workspaceID = event.currentTarget.id; // ID of the workspace user clicked on
+		const workspace = GetWorkspaceByID(workspaceID);
+
+		if (UserOwnsWorkspace(workspaceID)) {
+			if (!WorkspaceMarkedForDeletion(workspaceID))
+				setWorkspacesToDelete([...workspacesToDelete, workspace])
+			else {
+				let temp = workspacesToDelete.filter(e => e._id !== workspaceID);
+				setWorkspacesToDelete(temp);
+			}
 		}
-			
-		console.log(workspacesToDeleteTemp);
 	}
 
 	// SUBCOMPONENTS
+	// Buttons for adding and removing workspaces
 	const WorkspaceButtons = () => (
 		<div className='workspace-buttons'>
 			<button className='workspace-button-new' onClick={ToggleAddingWorkspace}>New Workspace</button>
@@ -91,18 +95,19 @@ function Workspaces({username, accessToken, proxy}) {
 		</div>
 	)
 
+	//Text input and button for adding new workspace
 	const AddNewWorkspace = () => (
 		<div className='new-workspace-container'>
 			{addingWorkspace && <button style={{width: '3rem', backgroundColor: 'green'}} className='workspace-button' onClick={AddWorkspaceAxios}>Add</button>}
 			<input
 				className={addingWorkspace ? 'new-workspace-name-input' : 'new-workspace-name-input-onExit'}
 				type='text'
-				id='new-workspace-name'
 				onChange={OnNewWorkspaceNameChange}>
 			</input>
 		</div>
 	)
 
+	// Card to display workspaces
 	const WorkspaceCard = (name, owner, _id) => {
 		
 		const GetClassName = () => {
@@ -126,8 +131,9 @@ function Workspaces({username, accessToken, proxy}) {
 				<div className='workspace-card-messages'>
 					50
 				</div>
-			</div>)
-		}
+			</div>
+		)
+	}
 
 	return (
 		<div>
@@ -137,6 +143,19 @@ function Workspaces({username, accessToken, proxy}) {
 			))}
 		</div>
 	)
+
+	// HELPER FUNCTIONS
+	function WorkspaceMarkedForDeletion(_id) {
+		return workspacesToDelete.some(e => e._id === _id);
+	}
+
+	function UserOwnsWorkspace(_id) {
+		return userWorkspaces.some(e => e._id === _id);
+	}
+
+	function GetWorkspaceByID(_id) {
+		return userWorkspaces.find(item => item._id === _id)
+	}
 }
 
 export default Workspaces;
