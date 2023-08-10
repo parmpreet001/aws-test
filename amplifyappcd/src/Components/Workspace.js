@@ -4,9 +4,14 @@ import './Workspace.scss'
 
 
 
-function Workspaces({accessToken, proxy}) {
+function Workspaces({username, accessToken, proxy}) {
 	const [workspaces, setWorkspaces] = useState([])
 	const [addingWorkspace, setAddingWorkspace] = useState(false);
+	const [newWorkspaceName, setNewWorkspaceName] = useState(null);
+
+	const OnNewWorkspaceNameChange = (event) => {
+		setNewWorkspaceName(event.target.value);
+	}
 
 	// GET WORKSPACES
 	const GetWorkspacesAxios = () => {
@@ -16,6 +21,21 @@ function Workspaces({accessToken, proxy}) {
 		}).catch((err) => {
 			console.log(err);
 		});
+	}
+
+	const AddWorkspaceAxios = () => {
+		if (newWorkspaceName === null || newWorkspaceName === '')
+			return;
+		axios.post(proxy + '/addWorkspace', {accessToken: accessToken, username: username, workspaceName: newWorkspaceName})
+			.then((response) => {
+				console.log(response);
+			})
+			.then(() => {
+				return GetWorkspacesAxios();
+			})
+			.catch((err) => {
+				console.log(err);
+			})
 	}
 
 	useEffect(() => {
@@ -32,17 +52,17 @@ function Workspaces({accessToken, proxy}) {
 			<button className='workspace-button-new' onClick={ToggleAddingWorkspace}>New Workspace</button>
 			<button className='workspace-button-delete'>Delete Workspace</button>
 			{AddNewWorkspace()}
-			
 		</div>
 	)
 
 	const AddNewWorkspace = () => (
 		<div className='new-workspace-container'>
-			{addingWorkspace && <button style={{width: '3rem', backgroundColor: 'green'}} className='workspace-button'>Add</button>}
+			{addingWorkspace && <button style={{width: '3rem', backgroundColor: 'green'}} className='workspace-button' onClick={AddWorkspaceAxios}>Add</button>}
 			<input
 				className={addingWorkspace ? 'new-workspace-name-input' : 'new-workspace-name-input-onExit'}
 				type='text'
-				id='new-workspace-name'>
+				id='new-workspace-name'
+				onChange={OnNewWorkspaceNameChange}>
 			</input>
 			
 		</div>

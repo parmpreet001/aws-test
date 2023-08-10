@@ -126,15 +126,22 @@ app.post("/profile", JWT.validateToken, (req, res) => {
 app.post("/addWorkspace", JWT.validateToken, (req, res) => {
 	const { username, workspaceName } = req.body;
 
-	const workspace = new Workspace({name: workspaceName, owner: username})
-
-	workspace.save()
-		.then(() => {
+	Workspace.exists({name: workspaceName, owner: username})
+		.then((result) => {
+			if (result) {
+				reject("Workspace exists");
+			}
+			else {
+				const workspace = new Workspace({name: workspaceName, owner: username})
+				return workspace.save();
+			}
+	 })
+	 .then(() => {
 			res.status(200).json("Added Workspace");
-		})
-		.catch((err) => {
+	 })
+	 .catch((err) => {
 			res.status(400).json(err);
-		})
+	})
 })
 
 app.post('/addUserToWorkspace', JWT.validateToken, (req, res) => {
