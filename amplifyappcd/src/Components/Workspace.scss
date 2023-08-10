@@ -1,0 +1,107 @@
+// WORKSPACE CARDS
+.workspace-card-container {
+	width: 75vw;
+	margin: 20px;
+	background-color: #1f2329;
+	border: 1px solid #c4c4c4;
+	border-radius: 8px;
+
+	filter: drop-shadow(5px 5px 4px #1d2126);
+	
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	text-align: left;
+	padding: 0.2rem 1rem;
+}
+
+.workspace-card-container:hover {
+	box-shadow: 0 0 15px 5px #555555;
+	background-color: #1d2126;
+}
+
+.workspace-card-name {
+	font-size: 1em;
+}
+
+.workspace-card-owner {
+	font-size: 0.5em;
+	color: gray;
+}
+
+.channel-card-messages {
+	font-size: 20px;
+}
+
+// WORKSPACE BUTTONS
+.workspace-buttons {
+	display: flex;
+	flex-direction:row-reverse;
+	align-items: center;
+}
+
+.workspace-button {
+	border-radius: 4px;
+	width: 8rem;
+	height: 2.5rem;
+}
+
+.workspace-button-new {
+	@extend .workspace-button;
+	background-color: hsl(125, 60%, 40%);
+	color: white;
+	margin-left: 10px;
+}
+
+.workspace-button-new:hover {
+	background-color: hsl(125, 50%, 30%);
+}
+
+.workspace-button-delete {
+	@extend .workspace-button;
+	background-color: hsl(0, 60%, 40%);
+	color: white;
+}
+
+.workspace-button-delete:hover {
+	background-color: hsl(0, 50%, 30%);
+}
+
+.new-workspace-name-input {
+  border: none;
+  border-radius: 4px;
+	height: 1.5rem;
+	margin-right: 20px;
+	
+	flex-grow: 0.5;
+	max-width: 20rem;
+
+	animation-name: new-workspace-name-input-enter;
+	animation-duration: 0.5s;
+}
+
+
+.new-workspace-name-input-onExit {
+  border: none;
+  border-radius: 4px;
+	height: 1.5rem;
+	margin-right: 20px;
+	
+	flex-grow: 0.5;
+	max-width: 0rem;
+
+	animation-name: new-workspace-name-input-exit;
+	animation-duration: 0.5s;
+	display: none;
+}
+
+@keyframes new-workspace-name-input-enter {
+	0% {max-width: 0rem; }
+	100% {max-width: 20rem; }
+}
+
+@keyframes new-workspace-name-input-exit {
+	0% {max-width: 20rem; display: inherit;}
+	99% {max-width: 0rem; display: inherit;}
+	100% {max-width: 0rem; display: none;}
+}
