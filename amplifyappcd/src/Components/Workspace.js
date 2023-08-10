@@ -32,15 +32,19 @@ function Workspaces({accessToken, proxy}) {
 			<button className='workspace-button-new' onClick={ToggleAddingWorkspace}>New Workspace</button>
 			<button className='workspace-button-delete'>Delete Workspace</button>
 			{AddNewWorkspace()}
+			
 		</div>
 	)
 
 	const AddNewWorkspace = () => (
+		<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
 			<input
 				className={addingWorkspace ? 'new-workspace-name-input' : 'new-workspace-name-input-onExit'}
 				type='text'
 				id='new-workspace-name'>
-			</input>
+			</input>			
+		</div>
+
 	)
 
 	const WorkspaceCard = (name, owner) => (
