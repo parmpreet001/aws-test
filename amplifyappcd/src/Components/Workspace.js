@@ -37,12 +37,13 @@ function Workspaces({accessToken, proxy}) {
 	)
 
 	const AddNewWorkspace = () => (
-		<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+		<div className='new-workspace-container'>
 			<input
 				className={addingWorkspace ? 'new-workspace-name-input' : 'new-workspace-name-input-onExit'}
 				type='text'
 				id='new-workspace-name'>
-			</input>			
+			</input>
+			<button style={{width: '3rem', backgroundColor: 'green'}} className='workspace-button'>Add</button>
 		</div>
 
 	)

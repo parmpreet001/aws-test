@@ -38,7 +38,7 @@
 	display: inherit;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1024px) {
 	.workspace-buttons {
 		flex-direction:row-reverse;
 		align-items: center;
@@ -51,12 +51,12 @@
 	width: 8rem;
 	height: 2.5rem;
 	color: white;
+	margin-left: 10px;
 }
 
 .workspace-button-new {
 	@extend .workspace-button;
 	background-color: hsl(125, 60%, 40%);
-	margin-left: 10px;
 }
 
 .workspace-button-new:hover {
@@ -76,8 +76,28 @@
   border: none;
   border-radius: 4px;
 	height: 1.5rem;
-	margin-top: 20px;
 	max-width: 20rem;
+}
+
+.new-workspace-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}
+
+@media only screen and (min-width: 1024px) {
+	.new-workspace-container {
+		margin-top: 0px;
+	}
+}
+
+.workspace-button-new-confirm {
+	border-radius: 4px;
+	width: 2.5rem;
+	height: 2.5rem;
+	color: white;
+	background-color: hsl(125, 60%, 40%);
 }
 
 .new-workspace-name-input {
@@ -87,10 +107,9 @@
 	animation-duration: 0.5s;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1024px) {
 	.new-workspace-name-input {
 		margin-top: 0px;
-		margin-right: 10px;
 	}
 }
 
@@ -102,10 +121,9 @@
 	display: none;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1024px) {
 	.new-workspace-name-input-onExit {
 		margin-top: 0px;
-		margin-right: 10px;
 	}
 }
 
