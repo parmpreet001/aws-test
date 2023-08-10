@@ -105,11 +105,13 @@
 
 	animation-name: input-field-enter;
 	animation-duration: 0.5s;
+	margin-left: 20px;
 }
 
 @media only screen and (min-width: 1024px) {
 	.new-workspace-name-input {
 		margin-top: 0px;
+		margin-left: 10px;
 	}
 }
 
