@@ -1,0 +1,45 @@
+// WORKSPACE CARD
+.workspace-card-container {
+	width: 75vw;
+	margin: 20px;
+	background-color: hsl(213, 13%, 13%);
+	border: 1px solid hsl(0, 0%, 77%);
+	border-radius: 8px;
+
+	filter: drop-shadow(5px 5px 4px hsl(213, 13%, 13%));
+	
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	text-align: left;
+	padding: 0.5rem 1rem;
+}
+
+.workspace-card-container-deleteMode {
+	@extend .workspace-card-container;
+	background-color: hsl(0, 15%, 15%)
+}
+
+.workspace-card-container-deleteMarked {
+	@extend .workspace-card-container;
+	background-color: hsl(0, 75%, 25%)
+}
+
+.workspace-card-container:hover {
+	box-shadow: 0 0 15px 5px hsl(0,0%,33%);
+	background-color: hsl(213, 13%, 13%);
+}
+
+// NEW WORKSPACE
+.new-workspace-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+}
+
+@media only screen and (min-width: 1024px) {
+	.new-workspace-container {
+		margin-top: 0px;
+	}
+}
