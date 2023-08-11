@@ -80,6 +80,9 @@ function Workspaces({username, accessToken, proxy}) {
 
 	// DATA MANIP. FUNCTIONS
 	const MarkWorkspaceForDeletion = (event) => {
+		if (!deletingWorkspace)
+			return;
+		
 		const workspaceID = event.currentTarget.id; // ID of the workspace user clicked on
 		const workspace = GetWorkspaceByID(workspaceID);
 
