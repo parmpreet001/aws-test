@@ -144,6 +144,28 @@ app.post("/addWorkspace", JWT.validateToken, (req, res) => {
 	})
 })
 
+app.post("/deleteWorkspaces", JWT.validateToken, (req, res) => {
+	const {workspacesToDelete} = req.body;
+
+	let promises = [];
+
+	console.log(workspacesToDelete);
+
+	workspacesToDelete.map((item) => {
+		promises.push(Workspace.findByIdAndDelete(item._id));
+		console.log(`Now deleting: ${item._id}`);
+	})
+
+	Promise.all(promises)
+	.then(() => {
+		console.log("deleted workspaces");
+		res.status(200).json("Successfully deleted workspaces");
+	})
+	.catch((err) => {
+		res.status(400).json(err);
+	})
+})
+
 app.post('/addUserToWorkspace', JWT.validateToken, (req, res) => {
 	const {username, workspaceName, workspaceOwner} = req.body;
 	let m_user;

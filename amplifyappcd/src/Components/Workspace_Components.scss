@@ -37,6 +37,18 @@
 	background-color: hsl(0, 50%, 30%);
 }
 
+.workspace-button-confirmDelete {
+	@extend .workspace-button;
+	background-color: hsl(0, 60%, 40%);
+	width: 4rem;
+	margin-top: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+	.workspace-button-confirmDelete {
+		margin-top: 0px;
+	}
+}
 
 
 // WORKSPACE CARD

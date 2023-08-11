@@ -38,6 +38,14 @@ function Workspaces({username, accessToken, proxy}) {
 		});
 	}
 
+	const DeleteWorkspacesAxios = () => {
+		axios.post(proxy + '/deleteWorkspaces', {accessToken: accessToken, workspacesToDelete: workspacesToDelete})
+		.then((response) => {
+			console.log(response);
+			ToggleDeletingWorkspace();
+		})
+	}
+
 	const AddWorkspaceAxios = () => {
 		if (newWorkspaceName === null || newWorkspaceName === '')
 			return;
@@ -85,12 +93,17 @@ function Workspaces({username, accessToken, proxy}) {
 		}
 	}
 
+	const DeleteMarkedWorkspaces = (event) => {
+		axios.post(proxy + '/getWorkspaces', {accessToken: accessToken})
+	}
+
 	// SUBCOMPONENTS
 	// Buttons for adding and removing workspaces
 	const WorkspaceButtons = () => (
 		<div className='workspace-buttons'>
 			<button className='workspace-button-new' onClick={ToggleAddingWorkspace}>New Workspace</button>
 			<button className='workspace-button-delete' onClick={ToggleDeletingWorkspace}>Delete Workspace</button>
+			{deletingWorkspace && <button className='workspace-button-confirmDelete' onClick={DeleteWorkspacesAxios}>Confirm</button>}
 			{AddNewWorkspace()}
 		</div>
 	)
