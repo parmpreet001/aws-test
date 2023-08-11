@@ -104,4 +104,25 @@ paths:
           description: "Retrieved Workspaces"
         400:
           description: "Bad Request"
-          
+  /addUserToWorkspace:
+    post:
+      summary: Add User to Workspace
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                username:
+                  type: string
+                workspaceName:
+                  type: string
+                workspaceOwner:
+                  type: string
+      responses:
+        200:
+          description: "Added user to workspace"            
+        400:
+          description: "Bad request"

@@ -126,15 +126,73 @@ app.post("/profile", JWT.validateToken, (req, res) => {
 app.post("/addWorkspace", JWT.validateToken, (req, res) => {
 	const { username, workspaceName } = req.body;
 
-	const workspace = new Workspace({name: workspaceName, owner: username})
-
-	workspace.save()
-		.then(() => {
+	Workspace.exists({name: workspaceName, owner: username})
+		.then((result) => {
+			if (result) {
+				reject("Workspace exists");
+			}
+			else {
+				const workspace = new Workspace({name: workspaceName, owner: username})
+				return workspace.save();
+			}
+	 })
+	 .then(() => {
 			res.status(200).json("Added Workspace");
-		})
-		.catch((err) => {
+	 })
+	 .catch((err) => {
 			res.status(400).json(err);
+	})
+})
+
+app.post("/deleteWorkspaces", JWT.validateToken, (req, res) => {
+	const {workspacesToDelete} = req.body;
+
+	let promises = [];
+
+	console.log(workspacesToDelete);
+
+	workspacesToDelete.map((item) => {
+		promises.push(Workspace.findByIdAndDelete(item._id));
+		console.log(`Now deleting: ${item._id}`);
+	})
+
+	Promise.all(promises)
+	.then(() => {
+		console.log("deleted workspaces");
+		res.status(200).json("Successfully deleted workspaces");
+	})
+	.catch((err) => {
+		res.status(400).json(err);
+	})
+})
+
+app.post('/addUserToWorkspace', JWT.validateToken, (req, res) => {
+	const {username, workspaceName, workspaceOwner} = req.body;
+	let m_user;
+	let m_workspace;
+
+	User.findOne({username: username})
+	.then((user) => {
+		m_user = user;
+	})
+	.then(() => {
+		return Workspace.findOne({name: workspaceName, owner: workspaceOwner})
+	})
+	.then((workspace) => {
+		m_workspace = workspace;
+	})
+	.then(() => {
+		m_workspace.users.push(m_user._id);
+		m_workspace.save((err) => {
+			if (err)
+				throw err;
 		})
+		res.status(200).json(`Added ${username} to ${workspaceName}`);
+	})
+	.catch((err) => {
+		console.log(err);
+		res.status(400).json("Username of workspace name invalid");
+	})
 })
 
 app.post("/getWorkspaces", JWT.validateToken, (req, res) => {
