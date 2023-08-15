@@ -219,3 +219,5 @@ else {
 function status400Default() {
 	return res.status(400).json({message: "Unexpected error"});
 }
+
+module.exports = app;
