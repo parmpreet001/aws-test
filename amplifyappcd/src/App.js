@@ -39,7 +39,7 @@ function App() {
         <div>
           {accessToken === null ? 
             <LoginRegistrationForm accessToken={accessToken} setAccessToken={setAccessToken} setAppUsername={setUsername}/> :
-            <Workspaces accessToken={accessToken} proxy={proxy}/>}
+            <Workspaces accessToken={accessToken} username={username} proxy={proxy}/>}
         </div>
 
       </header>
