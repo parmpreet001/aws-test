@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import LoginRegistrationForm from './Components/LoginForm'
-import Workspaces from './Components/Workspace'
+import Workspaces from './Components/Workspaces'
 import axios from 'axios';
 
 function App() {
