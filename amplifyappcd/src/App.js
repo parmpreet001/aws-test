@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import LoginRegistrationForm from './Components/LoginForm'
 import Workspaces from './Components/Workspaces'
 import axios from 'axios';
+import { LoginContext } from './Contexts/LoginContext';
 
 function App() {
   let proxy;
@@ -39,7 +40,10 @@ function App() {
         <div>
           {accessToken === null ? 
             <LoginRegistrationForm accessToken={accessToken} setAccessToken={setAccessToken} setAppUsername={setUsername}/> :
-            <Workspaces accessToken={accessToken} username={username} proxy={proxy}/>}
+            <LoginContext.Provider value={{username: username, accessToken: accessToken}}>
+              <Workspaces accessToken={accessToken} username={username} proxy={proxy}/>
+            </LoginContext.Provider>
+          }
         </div>
 
       </header>

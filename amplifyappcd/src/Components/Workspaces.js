@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './Workspaces.scss'
+import { LoginContext } from '../Contexts/LoginContext';
 
 
-function Workspaces({username, accessToken, proxy}) {
+
+function Workspaces({proxy}) {
 	const [workspaces, setWorkspaces] = useState([])
 	const [userWorkspaces, setUserWorkspaces] = useState([]); //Workspaces owned by user
 	const [addingWorkspace, setAddingWorkspace] = useState(false);
 	const [deletingWorkspace, setDeletingWorkspace] = useState(false);
 	const [workspacesToDelete, setWorkspacesToDelete] = useState([]);
 	const [newWorkspaceName, setNewWorkspaceName] = useState(null);
+	const {username, accessToken} = useContext(LoginContext);
 
 	const OnNewWorkspaceNameChange = (event) => {
 		setNewWorkspaceName(event.target.value);
