@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './Workspaces.scss'
 import { LoginContext } from '../Contexts/LoginContext';
+import Workspace from './Workspace';
 
 
 
@@ -13,6 +14,7 @@ function Workspaces({proxy}) {
 	const [workspacesToDelete, setWorkspacesToDelete] = useState([]);
 	const [newWorkspaceName, setNewWorkspaceName] = useState(null);
 	const {username, accessToken} = useContext(LoginContext);
+	const [selectedWorkspace, setSelectedWorkspace] = useState(null);
 
 	const OnNewWorkspaceNameChange = (event) => {
 		setNewWorkspaceName(event.target.value);
@@ -87,8 +89,17 @@ function Workspaces({proxy}) {
 		setAddingWorkspace(false);
 		setWorkspacesToDelete([]);
 	}
+	
 
 	// DATA MANIP. FUNCTIONS
+	const WorkspaceOnClick = (event) => {
+		console.log("clicked on workspace");
+		if (deletingWorkspace)
+			MarkWorkspaceForDeletion(event);
+		else if (!addingWorkspace)
+			EnterWorkspace(event)
+	}
+
 	const MarkWorkspaceForDeletion = (event) => {
 		if (!deletingWorkspace)
 			return;
@@ -104,6 +115,14 @@ function Workspaces({proxy}) {
 				setWorkspacesToDelete(temp);
 			}
 		}
+	}
+
+	const EnterWorkspace = (event) => {
+		const workspaceID = event.currentTarget.id;
+		const workspace = GetWorkspaceByID(workspaceID);
+		console.log(workspaceID);
+		console.log(workspace);
+		setSelectedWorkspace(workspace);
 	}
 
 	// SUBCOMPONENTS
@@ -129,6 +148,7 @@ function Workspaces({proxy}) {
 		</div>
 	)
 
+
 	// Card to display workspaces
 	const WorkspaceCard = (name, owner, _id) => {
 		
@@ -145,7 +165,7 @@ function Workspaces({proxy}) {
 			<div
 				id={_id}
 				className={GetClassName()}
-				onClick={MarkWorkspaceForDeletion}>
+				onClick={WorkspaceOnClick}>
 				<div>
 					<div className='workspace-card-name'>{name}</div>
 					<div className='workspace-card-owner'>{owner}</div>				
@@ -157,12 +177,20 @@ function Workspaces({proxy}) {
 		)
 	}
 
-	return (
+	const DisplayWorkspaces = () => (
 		<div>
 			{WorkspaceButtons()}
 			{workspaces.map((item, index) => (
 				<div key={index}>{WorkspaceCard(item.name, item.owner, item._id)}</div>
-			))}
+			))}			
+		</div>
+	)
+
+	return (
+		<div>
+			{!selectedWorkspace ? 
+			  DisplayWorkspaces() : <Workspace></Workspace>
+			}
 		</div>
 	)
 
@@ -176,7 +204,7 @@ function Workspaces({proxy}) {
 	}
 
 	function GetWorkspaceByID(_id) {
-		return userWorkspaces.find(item => item._id === _id)
+		return workspaces.find(item => item._id === _id)
 	}
 }
 
