@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import './Workspace.scss'
+import './Workspaces.scss'
+import { LoginContext } from '../Contexts/LoginContext';
 
 
-function Workspaces({username, accessToken, proxy}) {
+
+function Workspaces({proxy}) {
 	const [workspaces, setWorkspaces] = useState([])
 	const [userWorkspaces, setUserWorkspaces] = useState([]); //Workspaces owned by user
 	const [addingWorkspace, setAddingWorkspace] = useState(false);
 	const [deletingWorkspace, setDeletingWorkspace] = useState(false);
 	const [workspacesToDelete, setWorkspacesToDelete] = useState([]);
 	const [newWorkspaceName, setNewWorkspaceName] = useState(null);
+	const {username, accessToken} = useContext(LoginContext);
 
 	const OnNewWorkspaceNameChange = (event) => {
 		setNewWorkspaceName(event.target.value);
@@ -44,6 +47,12 @@ function Workspaces({username, accessToken, proxy}) {
 			console.log(response);
 			ToggleDeletingWorkspace();
 		})
+		.then(() => {
+			return GetWorkspacesAxios();
+		})
+		.catch((err) => {
+			console.log(err);
+		})
 	}
 
 	const AddWorkspaceAxios = () => {
@@ -73,6 +82,7 @@ function Workspaces({username, accessToken, proxy}) {
 	}
 
 	const ToggleDeletingWorkspace = () => {
+		console.log("toggle deleting workspaces");
 		setDeletingWorkspace(!deletingWorkspace);
 		setAddingWorkspace(false);
 		setWorkspacesToDelete([]);
@@ -94,10 +104,6 @@ function Workspaces({username, accessToken, proxy}) {
 				setWorkspacesToDelete(temp);
 			}
 		}
-	}
-
-	const DeleteMarkedWorkspaces = (event) => {
-		axios.post(proxy + '/getWorkspaces', {accessToken: accessToken})
 	}
 
 	// SUBCOMPONENTS
@@ -129,7 +135,7 @@ function Workspaces({username, accessToken, proxy}) {
 		const GetClassName = () => {
 			if (workspacesToDelete.some(e => e._id === _id))
 				return 'workspace-card-container-deleteMarked';
-			else if (deletingWorkspace && owner==username)
+			else if (deletingWorkspace && owner===username)
 				return 'workspace-card-container-deleteMode';
 			else
 				return 'workspace-card-container';
