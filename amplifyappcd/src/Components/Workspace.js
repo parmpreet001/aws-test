@@ -9,6 +9,7 @@ function Workspace() {
 
 
 	const [isDesktop, setDesktop] = useState(window.innerWidth >= 1024);
+	const [channelBarOpen, setChannelBarOpen] = useState(false);
 
 	const updateMedia = () => {
 		setDesktop(window.innerWidth >= 1024);
@@ -19,11 +20,21 @@ function Workspace() {
 		return () => window.removeEventListener("resize", updateMedia);
 	})
 
-	const renderChannels = () => (
-		<div className='channel-container'>
-			{[...Array(40)].map(() => (<div className='channel'>Channel</div>))}
-		</div >
-	)
+	const renderChannels = () => {
+		let styles;
+		if (isDesktop)
+			styles = {};
+		else if (channelBarOpen)
+			styles = {width: '50vw'}
+		else
+			styles = {width: '0vw'}
+
+		return (
+			<div className='channel-container' style={styles} >
+				{[...Array(40)].map(() => (<div className='channel'>Channel</div>))}
+			</div >			
+		)
+	}
 
 	const renderUsers = () => (
 		<div className='users-container'>
@@ -35,7 +46,7 @@ function Workspace() {
 	const renderNavBarMobile = () => (
 		<nav className='navbar'>
 			<div> <FontAwesomeIcon icon={faArrowLeft}/> </div>
-			<div> <FontAwesomeIcon icon={faHashtag}/> </div>
+			<div onClick={toggleChannelBar}> <FontAwesomeIcon icon={faHashtag}/> </div>
 			<div> <FontAwesomeIcon icon={faUser}/> </div>
 		</nav>
 	)
@@ -46,18 +57,21 @@ function Workspace() {
 		</nav>
 	)
 
+	const toggleChannelBar = () => {
+		setChannelBarOpen(!channelBarOpen)
+	}
+
 	return (
 		<div>
 			{isDesktop ? renderNavBarDesktop() : renderNavBarMobile()}
 			<div className='workspace-container'>
-				{isDesktop && renderChannels()}
+				{renderChannels()}
 				<div className='main-container'>
 					{isDesktop ? (<div>Desktop</div>) : (<div>Mobile</div>)}
 				</div>
 				{isDesktop && renderUsers()}
 			</div>			
 		</div>
-
 	)
 }
 

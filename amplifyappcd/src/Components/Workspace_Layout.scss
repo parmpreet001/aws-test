@@ -5,6 +5,20 @@
 }
 
 //CHANNELS
+.channel-container {
+	margin-top: 5vh;
+	height: 95vh;
+	text-align: left;
+	overflow: scroll;
+
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	background-color: black;
+
+	position: absolute;
+	transition: 200ms;
+}
+
 .channel {
 	margin-left: 2vmax;
 }
@@ -46,6 +60,7 @@
 
 @media only screen and (min-width: 1024px) {
 	.channel-container {
+		margin-top: 0vh;
 		padding-top: 7.5vh;
 		height: 100vh;
 		width: 15vw;
@@ -54,11 +69,14 @@
 	
 		-ms-overflow-style: none;
 		scrollbar-width: none;
+		background-color: inherit;
 	
 		box-sizing: border-box;
 		border-right-style: solid;
 		border-width: 10px;
 		border-color: hsl(210, 17%, 28%);
+
+		position: inherit;
 	}
 
 	.main-container {
