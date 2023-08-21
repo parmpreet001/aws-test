@@ -33,10 +33,6 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <div>
-          {data === null ? <p>Loading...</p> : <p>{data}</p>}
-        </div>
         <div>
           {accessToken === null ? 
             <LoginRegistrationForm accessToken={accessToken} setAccessToken={setAccessToken} setAppUsername={setUsername}/> :
