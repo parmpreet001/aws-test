@@ -1,44 +1,81 @@
-// WORKSPACE CARD
-.workspace-card-container {
-	width: 75vw;
-	margin: 20px;
-	background-color: hsl(213, 13%, 13%);
-	border: 1px solid hsl(0, 0%, 77%);
-	border-radius: 8px;
+.workspace-container {
+ display: flex;
+ flex-direction: row;
+ height: 100vh;
+}
 
-	filter: drop-shadow(5px 5px 4px hsl(213, 13%, 13%));
-	
+//CHANNELS
+.channel {
+	margin-left: 2vmax;
+}
+
+// MAIN
+.main-container {
+	padding-top: 7.5vh;
+	height: 92.5vh;
+	width: 100vw;
+}
+
+.header {
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	text-align: left;
-	padding: 0.5rem 1rem;
+  justify-content: center;
+  align-items: center;
+  background: #500ccf;
+	height: 5vh;
 }
 
-.workspace-card-container-deleteMode {
-	@extend .workspace-card-container;
-	background-color: hsl(0, 15%, 15%)
-}
-
-.workspace-card-container-deleteMarked {
-	@extend .workspace-card-container;
-	background-color: hsl(0, 75%, 25%)
-}
-
-.workspace-card-container:hover {
-	box-shadow: 0 0 15px 5px hsl(0,0%,33%);
-}
-
-// NEW WORKSPACE
-.new-workspace-container {
+.navbar {
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-top: 20px;
+	justify-content:space-around;
+  align-items: center;
+	width: 100vw;
+	height: 5vh;
+	background-color: black;
+	position: fixed;
+}
+
+.navbar-list {
+	list-style: none;
+	padding-inline-start: 0px;
+}
+
+::-webkit-scrollbar {
+	width: 0px;
+	background: transparent; /* make scrollbar transparent */
 }
 
 @media only screen and (min-width: 1024px) {
-	.new-workspace-container {
-		margin-top: 0px;
+	.channel-container {
+		padding-top: 7.5vh;
+		height: 100vh;
+		width: 15vw;
+		text-align: left;
+		overflow: scroll;
+	
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	
+		box-sizing: border-box;
+		border-right-style: solid;
+		border-width: 10px;
+		border-color: hsl(210, 17%, 28%);
+	}
+
+	.main-container {
+		padding-top: 7.5vh;
+		height: 92.5vh;
+		width: 70vw;
+	}
+
+	.users-container {
+		padding-top: 7.5vh;
+		height: 92.5vh;
+		width: 15vw;
+	}
+
+	.navbar {
+		padding-left: 20px;
+		padding-right: 20px;
+		justify-content:space-between;
 	}
 }
