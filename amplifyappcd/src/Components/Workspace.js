@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './Workspace.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft, faHashtag, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faHashtag, faUser, faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 
 function Workspace() {
@@ -67,7 +67,16 @@ function Workspace() {
 			<div className='workspace-container'>
 				{renderChannels()}
 				<div className='main-container'>
-					{isDesktop ? (<div>Desktop</div>) : (<div>Mobile</div>)}
+					<div className='messages-container'>
+						{[...Array(40)].map(() => (<div className='message-container'><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at quam efficitur nisl pulvinar porta a vitae eros. Curabitur accumsan quis turpis ut interdum. Ut eget gravida ante. Vivamus rutrum lacus ac pretium feugiat. Proin ipsum dolor, mollis eu consectetur vitae, ultricies ac ex. Etiam vel augue commodo, volutpat lacus sit amet, aliquam mi. Praesent id ultricies mi, vel commodo urna.</p></div>))}
+					</div>
+					<div className='input-container'>
+						<input></input>
+						<FontAwesomeIcon icon={faCircleArrowRight} />
+					</div>
+					
+					
+					
 				</div>
 				{isDesktop && renderUsers()}
 			</div>			

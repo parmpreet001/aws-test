@@ -28,6 +28,50 @@
 	padding-top: 7.5vh;
 	height: 92.5vh;
 	width: 100vw;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+}
+
+.messages-container {
+	height: 92.5%;
+	overflow-y: scroll;
+	font-size: 1.25rem;
+	padding-left: 40px;
+	padding-right: 40px;
+}
+
+.message-container {
+	color: white;
+	max-width: 70vw;
+	word-wrap: break-word;
+	white-space: normal;
+	text-align: left;
+}
+
+
+
+
+.input-container {
+	border-radius: 24px;
+	font-size: 1.5rem;
+	width: 80%;
+	height: 2rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.input-container input {
+	padding-left: 20px;
+	padding-right: 20px;
+	box-sizing: border-box;
+	border-radius: 24px;
+	font-size: 1.25rem;
+	width: 75%;
+	margin-left: 20px;
+	margin-right: 20px;
 }
 
 .header {
