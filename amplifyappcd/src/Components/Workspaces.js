@@ -13,7 +13,7 @@ function Workspaces({proxy}) {
 	const [deletingWorkspace, setDeletingWorkspace] = useState(false);
 	const [workspacesToDelete, setWorkspacesToDelete] = useState([]);
 	const [newWorkspaceName, setNewWorkspaceName] = useState(null);
-	const {username, accessToken} = useContext(LoginContext);
+	const {userID, accessToken} = useContext(LoginContext);
 	const [selectedWorkspace, setSelectedWorkspace] = useState(null);
 
 	const OnNewWorkspaceNameChange = (event) => {
@@ -32,7 +32,7 @@ function Workspaces({proxy}) {
 			//Parse array of workspaces and determie which ones are owned by the user
 			let userWorkspacesTemp = [];
 			fetchedWorkspaces.map((workspaces) => {
-				if (workspaces.owner === username) {
+				if (workspaces.owner === userID) {
 					userWorkspacesTemp.push(workspaces);
 				}
 			})
@@ -60,7 +60,7 @@ function Workspaces({proxy}) {
 	const AddWorkspaceAxios = () => {
 		if (newWorkspaceName === null || newWorkspaceName === '')
 			return;
-		axios.post(proxy + '/addWorkspace', {accessToken: accessToken, username: username, workspaceName: newWorkspaceName})
+		axios.post(proxy + '/addWorkspace', {accessToken: accessToken, userID: userID, workspaceName: newWorkspaceName})
 			.then((response) => {
 				console.log(response);
 			})
@@ -155,7 +155,7 @@ function Workspaces({proxy}) {
 		const GetClassName = () => {
 			if (workspacesToDelete.some(e => e._id === _id))
 				return 'workspace-card-container-deleteMarked';
-			else if (deletingWorkspace && owner===username)
+			else if (deletingWorkspace && owner===userID)
 				return 'workspace-card-container-deleteMode';
 			else
 				return 'workspace-card-container';

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-function LoginRegistrationForm({accessToken, setAccessToken, setAppUsername}) {
+function LoginRegistrationForm({accessToken, setAccessToken, setUserID}) {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -28,7 +28,7 @@ function LoginRegistrationForm({accessToken, setAccessToken, setAppUsername}) {
 			.then((response) => {
 				if (response.data.accessToken) {
 					setAccessToken(response.data.accessToken)
-					setAppUsername(username)
+					setUserID(response.data.userID)
 				}
 			}).catch((err) => {
 				console.log(err);

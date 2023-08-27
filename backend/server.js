@@ -86,6 +86,7 @@ app.post("/register", (req, res) => {
 
 app.post("/login", (req, res) => {
 	const {username, password} = req.body;
+	let userID;
 
 	User.find({username: username})
 		.then((result) => {
@@ -95,6 +96,7 @@ app.post("/login", (req, res) => {
 			
 			// Otherwise, return hashed password
 			const user = result[0];
+			userID = user._id;
 			return user.password;
 		})
 		.then((hashedPassword) => {
@@ -104,7 +106,7 @@ app.post("/login", (req, res) => {
 			//If given password matches hashed password, return accessToken
 			if (match) {
 				const accessToken = JWT.createToken({username: username})
-				res.status(200).json({accessToken: accessToken})
+				res.status(200).json({accessToken: accessToken, userID: userID})
 			}
 			else
 				res.status(400).json("Invalid Password")
@@ -124,22 +126,28 @@ app.post("/profile", JWT.validateToken, (req, res) => {
 
 // WORKSPACES
 app.post("/addWorkspace", JWT.validateToken, (req, res) => {
-	const { username, workspaceName } = req.body;
+	const { userID, workspaceName } = req.body;
 
-	Workspace.exists({name: workspaceName, owner: username})
-		.then((result) => {
-			if (result) {
-				reject("Workspace exists");
-			}
-			else {
-				const workspace = new Workspace({name: workspaceName, owner: username})
-				return workspace.save();
-			}
-	 })
-	 .then(() => {
+	Workspace.exists({name: workspaceName, owner: userID})
+	.then((result) => {
+		if (result)
+			reject("Workspace exists");
+	})
+	.then(() => {
+		var user = User.findOne({_id: userID});
+		if (user)
+			return user;
+		else
+			reject("Invalid username");
+	})
+	.then((user) => {
+			const workspace = new Workspace({name: workspaceName, owner: userID})
+			return workspace.save();
+	})
+	.then(() => {
 			res.status(200).json("Added Workspace");
-	 })
-	 .catch((err) => {
+	})
+	.catch((err) => {
 			res.status(400).json(err);
 	})
 })

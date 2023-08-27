@@ -1,3 +1,5 @@
+const Channel = require('./channel')
+
 const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
 
@@ -9,11 +11,15 @@ const workspaceSchema = new Schema({
 		required: true
 	},
 	owner: {
-		type: String,
+		type: ObjectId,
+		ref: 'User',
 		required: true
 	},
-	users: [{type: ObjectId, ref: 'User'}]
+	users: [{type: ObjectId, ref: 'User'}],
+	channels: [Channel.schema]
 })
+
+workspaceSchema.index({owner: 1});
 
 const Workspace = mongoose.model('Workspace', workspaceSchema)
 
