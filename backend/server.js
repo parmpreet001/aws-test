@@ -202,8 +202,16 @@ app.post('/addUserToWorkspace', JWT.validateToken, (req, res) => {
 })
 
 app.post("/getWorkspaces", JWT.validateToken, (req, res) => {
-	Workspace.find()
+	const userID = req.body.userID;
+	console.log(userID);
+	Workspace.find({
+		$or: [
+			{ ownerID: userID },
+			{ users: { $in: [userID]}}
+		]
+	})
 		.then((result) => {
+			console.log(result);
 			res.status(200).json(result);
 		})
 		.catch((err) => {

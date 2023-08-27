@@ -22,7 +22,7 @@ function Workspaces({proxy}) {
 
 	// SERVER FUNCTIONS
 	const GetWorkspacesAxios = () => {
-		axios.post(proxy + '/getWorkspaces', {accessToken: accessToken})
+		axios.post(proxy + '/getWorkspaces', {accessToken: accessToken, userID: userID})
 		.then((response) => {
 			const fetchedWorkspaces = response.data;
 			setWorkspaces(fetchedWorkspaces);
