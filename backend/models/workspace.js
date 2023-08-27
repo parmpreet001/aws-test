@@ -10,7 +10,7 @@ const workspaceSchema = new Schema({
 		type: String,
 		required: true
 	},
-	owner: {
+	ownerID: {
 		type: ObjectId,
 		ref: 'User',
 		required: true

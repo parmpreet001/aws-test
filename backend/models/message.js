@@ -8,17 +8,17 @@ const messageSchema = new Schema({
 		type: String,
 		required: true
 	},
-	sender: {
+	senderID: {
 		type: ObjectId,
 		ref: 'User',
 		required: true
 	},
-	workspace: {
+	workspaceID: {
 		type:ObjectId,
 		ref: 'Workspace',
 		required: true
 	},
-	channel: {
+	channelID: {
 		type: ObjectId,
 		ref: 'Channel',
 		required: true
