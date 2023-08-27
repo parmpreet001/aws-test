@@ -32,7 +32,7 @@ function Workspaces({proxy}) {
 			//Parse array of workspaces and determie which ones are owned by the user
 			let userWorkspacesTemp = [];
 			fetchedWorkspaces.map((workspaces) => {
-				if (workspaces.owner === userID) {
+				if (workspaces.ownerID === userID) {
 					userWorkspacesTemp.push(workspaces);
 				}
 			})
@@ -150,12 +150,12 @@ function Workspaces({proxy}) {
 
 
 	// Card to display workspaces
-	const WorkspaceCard = (name, owner, _id) => {
+	const WorkspaceCard = (name, ownerID, _id) => {
 		
 		const GetClassName = () => {
 			if (workspacesToDelete.some(e => e._id === _id))
 				return 'workspace-card-container-deleteMarked';
-			else if (deletingWorkspace && owner===userID)
+			else if (deletingWorkspace && ownerID===userID)
 				return 'workspace-card-container-deleteMode';
 			else
 				return 'workspace-card-container';
@@ -168,7 +168,7 @@ function Workspaces({proxy}) {
 				onClick={WorkspaceOnClick}>
 				<div>
 					<div className='workspace-card-name'>{name}</div>
-					<div className='workspace-card-owner'>{owner}</div>				
+					<div className='workspace-card-owner'>{ownerID}</div>				
 				</div>
 				<div className='workspace-card-messages'>
 					50
@@ -181,7 +181,7 @@ function Workspaces({proxy}) {
 		<div>
 			{WorkspaceButtons()}
 			{workspaces.map((item, index) => (
-				<div key={index}>{WorkspaceCard(item.name, item.owner, item._id)}</div>
+				<div key={index}>{WorkspaceCard(item.name, item.ownerID, item._id)}</div>
 			))}			
 		</div>
 	)

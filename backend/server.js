@@ -136,7 +136,7 @@ app.post("/addWorkspace", JWT.validateToken, (req, res) => {
 	.then(() => {
 		var user = User.findOne({_id: userID});
 		if (!user)
-			;reject("Invalid username");
+			reject("Invalid username");
 	})
 	.then(() => {
 			const workspace = new Workspace({name: workspaceName, ownerID: userID})
