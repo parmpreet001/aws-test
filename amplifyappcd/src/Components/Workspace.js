@@ -3,6 +3,8 @@ import axios from 'axios';
 import './Workspace.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faHashtag, faUser, faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { LoginContext } from '../Contexts/LoginContext';
+import { WorkspaceContext } from '../Contexts/WorkspaceContext';
 
 
 function Workspace() {
@@ -10,6 +12,9 @@ function Workspace() {
 
 	const [isDesktop, setDesktop] = useState(window.innerWidth >= 1024);
 	const [channelBarOpen, setChannelBarOpen] = useState(false);
+
+	const {userID, accessToken} = useContext(LoginContext);
+	const {selectedWorkspace, setSelectedWorkspace} = useContext(WorkspaceContext);
 
 	const updateMedia = () => {
 		setDesktop(window.innerWidth >= 1024);
@@ -54,6 +59,8 @@ function Workspace() {
 	const renderNavBarDesktop = () => (
 		<nav className='navbar'>
 			<div> <FontAwesomeIcon icon={faArrowLeft}/> </div>
+			<div className='navbar-workspace-name'>{selectedWorkspace.name}</div>
+			<div></div>
 		</nav>
 	)
 
