@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Workspaces.scss'
 import { LoginContext } from '../Contexts/LoginContext';
 import Workspace from './Workspace';
+import { WorkspaceContext } from '../Contexts/WorkspaceContext';
 
 
 
@@ -189,7 +190,12 @@ function Workspaces({proxy}) {
 	return (
 		<div>
 			{!selectedWorkspace ? 
-			  DisplayWorkspaces() : <Workspace></Workspace>
+			  DisplayWorkspaces() :
+					<LoginContext.Provider value={{userID: userID, accessToken: accessToken}}>
+						<WorkspaceContext.Provider value={{selectedWorkspace: selectedWorkspace, setSelectedWorkspace: setSelectedWorkspace}}>
+							<Workspace></Workspace>
+						</WorkspaceContext.Provider>
+					</LoginContext.Provider>
 			}
 		</div>
 	)
