@@ -41,6 +41,10 @@ function Workspace() {
 		)
 	}
 
+	const unsetWorkspace = () => {
+		setSelectedWorkspace(null);
+	}
+
 	const renderUsers = () => (
 		<div className='users-container'>
 		Item 3
@@ -50,7 +54,7 @@ function Workspace() {
 	// NAV BAR
 	const renderNavBarMobile = () => (
 		<nav className='navbar'>
-			<div> <FontAwesomeIcon icon={faArrowLeft}/> </div>
+			<div> <FontAwesomeIcon icon={faArrowLeft} onClick={unsetWorkspace}/> </div>
 			<div onClick={toggleChannelBar}> <FontAwesomeIcon icon={faHashtag}/> </div>
 			<div> <FontAwesomeIcon icon={faUser}/> </div>
 		</nav>
@@ -58,7 +62,7 @@ function Workspace() {
 
 	const renderNavBarDesktop = () => (
 		<nav className='navbar'>
-			<div> <FontAwesomeIcon icon={faArrowLeft}/> </div>
+			<div> <FontAwesomeIcon icon={faArrowLeft} onClick={unsetWorkspace}/> </div>
 			<div className='navbar-workspace-name'>{selectedWorkspace.name}</div>
 			<div></div>
 		</nav>
