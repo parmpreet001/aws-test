@@ -150,7 +150,7 @@ function Workspaces({proxy}) {
 
 
 	// Card to display workspaces
-	const WorkspaceCard = (name, ownerID, _id) => {
+	const WorkspaceCard = (name, ownerID, _id, ownerUsername) => {
 		
 		const GetClassName = () => {
 			if (workspacesToDelete.some(e => e._id === _id))
@@ -168,7 +168,7 @@ function Workspaces({proxy}) {
 				onClick={WorkspaceOnClick}>
 				<div>
 					<div className='workspace-card-name'>{name}</div>
-					<div className='workspace-card-owner'>{ownerID}</div>				
+					<div className='workspace-card-owner'>{ownerUsername}</div>				
 				</div>
 				<div className='workspace-card-messages'>
 					50
@@ -181,7 +181,7 @@ function Workspaces({proxy}) {
 		<div>
 			{WorkspaceButtons()}
 			{workspaces.map((item, index) => (
-				<div key={index}>{WorkspaceCard(item.name, item.ownerID, item._id)}</div>
+				<div key={index}>{WorkspaceCard(item.name, item.ownerID, item._id, item.ownerUsername)}</div>
 			))}			
 		</div>
 	)

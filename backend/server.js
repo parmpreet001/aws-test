@@ -203,21 +203,48 @@ app.post('/addUserToWorkspace', JWT.validateToken, (req, res) => {
 
 app.post("/getWorkspaces", JWT.validateToken, (req, res) => {
 	const userID = req.body.userID;
-	console.log(userID);
 	Workspace.find({
 		$or: [
 			{ ownerID: userID },
 			{ users: { $in: [userID]}}
 		]
 	})
-		.then((result) => {
-			console.log(result);
-			res.status(200).json(result);
+	.then((workspaces) => {
+		// This is necessary because Mongoose doesnt allow you to add properties that aren't defined in the schema, so we convert the object
+		workspaces = JSON.parse(JSON.stringify(workspaces));
+		const promises = [];
+
+		workspaces.forEach((workspace) => {
+			const promise = getUsernameByID(workspace.ownerID)
+			.then((ownerUsername) => {
+				workspace.ownerUsername = ownerUsername;
+			})
+
+			promises.push(promise);
 		})
-		.catch((err) => {
-			res.status(400).json(err);
+
+		Promise.all(promises)
+		.then(() => {
+			res.status(200).json(workspaces);
 		})
+	})
+	.catch((err) => {
+		res.status(400).json(err);
+	})
 })
+
+// HELPER FUNCTIONS
+function getUsernameByID(userID)
+{
+
+	return new Promise((resolve, reject) => {
+	  User.findById(userID)
+	  .then((result) => {
+			resolve(result.username);
+		})
+	})
+
+}
 
 //SERVER START
 if (process.env.SERVER_TYPE === 'development')
